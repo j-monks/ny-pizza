@@ -21,6 +21,7 @@ export default class App extends Component {
 
   render() {
     return(
+      // defining context data and methods using the context provider component
       <Context.Provider
         value={{
           ...this.state,
@@ -31,6 +32,9 @@ export default class App extends Component {
           clearCart: this.clearCart,
           checkout: this.checkout
         }}
+        // navigation is handled via the router component, routes defined using switch and route components
+        // navigation menu is being created with each link using the 'Link' component provided in the React Router module
+        // routerRef is a reference to the 'Router' component to enable us to access the router from within the 'App' component
         >
           <Router ref={this.routerRef}>
             <div className="App">
@@ -101,5 +105,3 @@ export default class App extends Component {
     ); 
   }
 }
-
-export default App;
