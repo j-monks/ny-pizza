@@ -61,6 +61,13 @@ export default class App extends Component {
     this.setState({ user: null });
     localStorage.removeItem("user");
   };
+  // takes the product object & appends it to the array of products
+  // its then saved to the app state (also has a callback that executes upon successfull adding of the product)
+  addProduct = (product, callback) => {
+    let products = this.state.products.slice();
+    products.push(product);
+    this.setState({ products }, () => callback && callback());
+  };
 
   render() {
     return(
