@@ -21,7 +21,7 @@ export default class App extends Component {
     this.routerRef = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     let user = localStorage.getItem("user");
     // componentDidMount lifecycle hook is now marked as being async, allows to make a request to products endpoint 
     // & wait for the data to be returned before adding it into state
