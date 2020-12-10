@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import AddProduct from "./components/AddProduct";
 import Cart from "./components/Cart";
@@ -18,6 +20,44 @@ export default class App extends Component {
     };
     this.routerRef = React.createRef();
   }
+
+  componentDidMount() {
+    let user = localStorage.getItem("user");
+    user = user ? JSON.parse(user) : null;
+    this.setState({ user });
+  }
+  // making an ajax request to /login endpoint, passing it user input from login form 
+  // (if correct creds, the token sent from the server res to obtain users email, before saving the email & users access level in state)
+  // depending on result the method returns true or false which is then used in the login component to decide what to display
+  login = async (email, password) => {
+    const res = await axios.post(
+      "http://localhost:3001/login",
+      { email, password },
+    ).catch((res) => {
+      return { status: 401, message: "Unauthorized" }
+    })
+
+    if(res.status === 200) {
+      const { email } = jwt_decode(res.data.accessToken)
+      const user = {
+        email, 
+        token: res.data.accessToken,
+        accessLevel: email === "admin@example.com" ? 0 : 1
+      }
+
+      this.setState({ user });
+      localStorage.setItem("user", JSON.stringify(user));
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // logout method is clearing the user from both state and local storage
+  logout = e => {
+    e.preventDefault();
+    this.setState({ user: null });
+    localStorage.removeItem("user");
+  };
 
   render() {
     return(
