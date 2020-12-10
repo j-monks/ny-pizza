@@ -35,3 +35,5 @@ const ProductList = props => {
         </>
     );
 }
+
+export default withContext(ProductList);
