@@ -23,11 +23,14 @@ export default class App extends Component {
 
   async componentDidMount() {
     let user = localStorage.getItem("user");
+    let cart = localStorage.getItem("cart");
     // componentDidMount lifecycle hook is now marked as being async, allows to make a request to products endpoint 
     // & wait for the data to be returned before adding it into state
     const products = await axios.get("http://localhost:3001/products");
     user = user ? JSON.parse(user) : null;
-    this.setState({ user, products: products.data });
+    cart = cart ? JSON.parse(cart) : {};
+
+    this.setState({ user, products: products.data, cart });
   }
   // making an ajax request to /login endpoint, passing it user input from login form 
   // (if correct creds, the token sent from the server res to obtain users email, before saving the email & users access level in state)
