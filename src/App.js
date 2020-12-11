@@ -71,7 +71,11 @@ export default class App extends Component {
     products.push(product);
     this.setState({ products }, () => callback && callback());
   };
-
+  // appending the item using item ID as the key for the cart object.
+  // its checking the cart object and seeing if a item with that key exists, if so, it will increase the amount, if not, it will create a new entry.
+  // second if statement makes sure the user can't add more items than are actually available.
+  // the cart is saved to state, which is passed to components via context
+  // lastly the updated cart is saved to local storage for data persistence.
   addToCart = cartItem => {
     let cart = this.state.cart;
     if (cart[cartItem.id]) {
@@ -85,7 +89,6 @@ export default class App extends Component {
     localStorage.setItem("cart", JSON.stringify(cart));
     this.setState({ cart })
   };
-  
 
   render() {
     return(
