@@ -97,6 +97,12 @@ export default class App extends Component {
     localStorage.setItem("cart", JSON.stringify(cart));
     this.setState({ cart });
   };
+  // resets cart to an empty object in state, also removes cart entry in local storage
+  clearCart = () => {
+    let cart = {};
+    localStorage.removeItem("cart");
+    this.setState({ cart });
+  };
 
   render() {
     return(
