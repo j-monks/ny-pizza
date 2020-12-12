@@ -89,6 +89,14 @@ export default class App extends Component {
     localStorage.setItem("cart", JSON.stringify(cart));
     this.setState({ cart })
   };
+  // using the provided product key the product will be removed from the cart
+  // subsequently updating the updating the app state & local storage
+  removeFromCart = cartItemId => {
+    let cart = this.state.cart;
+    delete cart[cartItemId];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    this.setState({ cart });
+  };
 
   render() {
     return(
